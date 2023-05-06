@@ -1,4 +1,4 @@
-# OFDM Over Audio Part 1
+# OFDM Over Audio
 
 An OFDM modem implementation that works over audio. Maybe we will build the upper layers of the stack *eventually*. For now we are going to be building the physical (PHY) layer of an OFDM modem that works over audio. OFDM is used in WiFI, 5G, digital TV, and a host of other radio communincation.
 
