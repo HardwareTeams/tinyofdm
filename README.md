@@ -20,4 +20,4 @@ run:
 
 ### Running Tests
 
-`python3 -m unittest -v test.test_ofdmpy.VisOfdmPy.gen_symbol`
+`python3 -m unittest -v test.test_vis.VisTests.gen_symbol`
