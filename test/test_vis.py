@@ -1,6 +1,6 @@
 import numpy as np 
 import unittest
-from ofdmpy.ofdmpy import TxModem
+from tinyofdm.modem import TxModem
 from scipy.fft import fft, ifft, fftshift
 import matplotlib.pyplot as plt
 
