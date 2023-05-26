@@ -5,14 +5,13 @@ from scipy.signal import resample
 import matplotlib.pyplot as plt
 from scipy.fft import fft, ifft, fftshift
 import sys
-
+sd.default.device = 8
 """
 ofdmpy is a super minimal PHY implementation of an OFDM modem
 that works in the audio spectrum. thats it. 
 """
-
 class OfdmModem:
-    def __init__(self, fft_size, cp_len, fs_bb, fs_tx, fc):
+    def __init__(self, fft_size, cp_len, fs_bb, fs_tx, fc, rx_device=0, tx_device=0):
         """
         cp_len = cyclic prefix length
         fs_bb = baseband sampling rate
@@ -25,6 +24,8 @@ class OfdmModem:
         self.fc = fc 
         self.fft_size = fft_size # hardcode for now
         self.os_factor = int(self.fs_tx/self.fs_bb)
+        self.rx_device = rx_device
+        self.tx_device = tx_device
 
         """
         short training (st) sequence/preamble
@@ -141,9 +142,9 @@ class RxModem(OfdmModem):
     def receive(self, data=[], seconds=0., audio=False):
         if(audio):
             rx = np.zeros((int(self.fs_tx*seconds), 1))
-            sd.rec(samplerate=self.fs_tx, channel=1, out=rx)
+            sd.rec(samplerate=self.fs_tx, out=rx)
             sd.wait()
-            return np.reshape(rx,(len(rx)))
+            return self.decimate(self.freq_shift(np.reshape(rx,(len(rx)))))
         return self.decimate(self.freq_shift(data))
 
    

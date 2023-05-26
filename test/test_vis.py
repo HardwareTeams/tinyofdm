@@ -121,5 +121,6 @@ class LoopBack(unittest.TestCase):
 
         print('received data')
         print(np.round(fftshift(received_data),2))
-        
+        assert(True)
+
        
