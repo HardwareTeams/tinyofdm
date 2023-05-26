@@ -46,10 +46,9 @@ class AudioTests(unittest.TestCase):
       rx = RxModem(fft_size, cp, fs_bb, fs_tx, fc)
 
       # receiver from mic
-      rx_raw = rx.receive([], 10.0, True)
+      rx_iq = rx.receive([], 10.0, True)
 
       # downconvert
-      rx_iq = rx.receive(rx_raw)
       plt.figure
       plt.plot(rx_iq)
       plt.show()
