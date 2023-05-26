@@ -81,14 +81,15 @@ class LoopBack(unittest.TestCase):
                                 bpsk_test_seq,\
                                 np.zeros(500, 'complex')))
 
+        # transmit data, passthrough
         tx_data = tx.transmit(tx_all, False)
 
+        # emulate channel
         rx_raw = lfilter(tx.upsample(test_chan, tx.os_factor), [1.], tx_data) + \
                  np.random.normal(0, 0.05, len(tx_data))
         
         # downconvert
-        rx_dc = rx.freq_shift(rx_raw)
-        rx_iq = rx.decimate(rx_dc)
+        rx_iq = rx.receive(rx_raw)
 
         #detection chain
         rx_st_det, found_start, rx_start_st = rx.detect_symbol(rx_iq, 16)

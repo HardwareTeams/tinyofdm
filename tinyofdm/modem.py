@@ -138,11 +138,13 @@ class RxModem(OfdmModem):
         indexes_of_detect = np.where(y>=0.85*np.max(y))[0]
         return y, indexes_of_detect[0]-32
     
-    def receive(self, seconds):
-        rx = np.zeros((int(self.fs_tx*seconds), 1))
-        sd.rec(samplerate=self.fs_tx, channel=1, out=rx)
-        sd.wait()
-        return np.reshape(rx,(len(rx)))
+    def receive(self, data=[], seconds=0., audio=False):
+        if(audio):
+            rx = np.zeros((int(self.fs_tx*seconds), 1))
+            sd.rec(samplerate=self.fs_tx, channel=1, out=rx)
+            sd.wait()
+            return np.reshape(rx,(len(rx)))
+        return self.decimate(self.freq_shift(data))
 
    
 
